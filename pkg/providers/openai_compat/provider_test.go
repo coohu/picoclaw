@@ -274,10 +274,23 @@ func TestProviderChat_AcceptsNumericOptionTypes(t *testing.T) {
 }
 
 func TestNormalizeModel_UsesAPIBase(t *testing.T) {
-	if got := normalizeModel("deepseek/deepseek-chat", "https://api.deepseek.com/v1"); got != "deepseek-chat" {
+	if got := normalizeModel(
+		"deepseek/deepseek-chat", 
+		"https://api.deepseek.com/v1",
+	); got != "deepseek-chat" {
 		t.Fatalf("normalizeModel(deepseek) = %q, want %q", got, "deepseek-chat")
 	}
-	if got := normalizeModel("openrouter/auto", "https://openrouter.ai/api/v1"); got != "openrouter/auto" {
+	if got := normalizeModel(
+		"openrouter/auto", 
+		"https://openrouter.ai/api/v1",
+	); got != "openrouter/auto" {
 		t.Fatalf("normalizeModel(openrouter) = %q, want %q", got, "openrouter/auto")
+	}
+	// ShengSuanYun supports full model paths like deepseek/deepseek-v3.2
+	if got := normalizeModel(
+		"deepseek/deepseek-v3.2-exp", 
+		"https://router.shengsuanyun.com/api/v1",
+	); got != "deepseek/deepseek-v3.2-exp" {
+		t.Fatalf("normalizeModel(shengsuanyun) = %q, want %q", got, "deepseek/deepseek-v3.2-exp")
 	}
 }
